@@ -6,9 +6,9 @@ import styles from "./Ask.module.css";
 import { askApi, configApi, ChatAppResponse, ChatAppRequest, RetrievalMode, VectorFieldOptions, GPT4VInput } from "../../api";
 import { Answer, AnswerError } from "../../components/Answer";
 import { QuestionInput } from "../../components/QuestionInput";
-import { ExampleList } from "../../components/Example";
+// import { ExampleList } from "../../components/Example";
 import { AnalysisPanel, AnalysisPanelTabs } from "../../components/AnalysisPanel";
-import { SettingsButton } from "../../components/SettingsButton/SettingsButton";
+// import { SettingsButton } from "../../components/SettingsButton/SettingsButton";
 import { useLogin, getToken, isLoggedIn, requireAccessControl } from "../../authConfig";
 import { VectorSettings } from "../../components/VectorSettings";
 import { GPT4VSettings } from "../../components/GPT4VSettings";
@@ -21,7 +21,7 @@ export function Component(): JSX.Element {
     const [promptTemplate, setPromptTemplate] = useState<string>("");
     const [promptTemplatePrefix, setPromptTemplatePrefix] = useState<string>("");
     const [promptTemplateSuffix, setPromptTemplateSuffix] = useState<string>("");
-    const [temperature, setTemperature] = useState<number>(0.3);
+    const [temperature, setTemperature] = useState<number>(0.0);
     const [retrievalMode, setRetrievalMode] = useState<RetrievalMode>(RetrievalMode.Hybrid);
     const [retrieveCount, setRetrieveCount] = useState<number>(3);
     const [useSemanticRanker, setUseSemanticRanker] = useState<boolean>(true);
@@ -187,20 +187,15 @@ export function Component(): JSX.Element {
     return (
         <div className={styles.askContainer}>
             <div className={styles.askTopSection}>
-                <SettingsButton className={styles.settingsButton} onClick={() => setIsConfigPanelOpen(!isConfigPanelOpen)} />
+                {/* <SettingsButton className={styles.settingsButton} onClick={() => setIsConfigPanelOpen(!isConfigPanelOpen)} /> */}
                 <h1 className={styles.askTitle}>Ask your data</h1>
                 <div className={styles.askQuestionInput}>
-                    <QuestionInput
-                        placeholder="Example: Does my plan cover annual eye exams?"
-                        disabled={isLoading}
-                        initQuestion={question}
-                        onSend={question => makeApiRequest(question)}
-                    />
+                    <QuestionInput disabled={isLoading} initQuestion={question} onSend={question => makeApiRequest(question)} />
                 </div>
             </div>
             <div className={styles.askBottomSection}>
                 {isLoading && <Spinner label="Generating answer" />}
-                {!lastQuestionRef.current && <ExampleList onExampleClicked={onExampleClicked} useGPT4V={useGPT4V} />}
+                {/* {!lastQuestionRef.current && <ExampleList onExampleClicked={onExampleClicked} useGPT4V={useGPT4V} />} */}
                 {!isLoading && answer && !error && (
                     <div className={styles.askAnswerContainer}>
                         <Answer

@@ -22,12 +22,12 @@ class RetrieveThenReadApproach(Approach):
     """
 
     system_chat_template = (
-        "You are an intelligent assistant helping Contoso Inc employees with their healthcare plan questions and employee handbook questions. "
-        + "Use 'you' to refer to the individual asking the questions even if they ask with 'I'. "
-        + "Answer the following question using only the data provided in the sources below. "
-        + "For tabular information return it as an html table. Do not return markdown format. "
-        + "Each source has a name followed by colon and the actual information, always include the source name for each fact you use in the response. "
-        + "If you cannot answer using the sources below, say you don't know. Use below example to answer"
+        "You are an intelligent AI assistant for answering questions about Rockwell Automation devices and products and data associated with Rockwell devices. The documents provided to you contain text, graphs, tables and images."
+        + "You are given the following extracted parts of a long document and a question. Provide a conversational answer. Be brief in your answers."
+        + "Answer ONLY with the facts listed in the list of sources below. If there isn't enough information below, say you don't know. Do not generate answers that don't use the sources below. If asking a clarifying question to the user would help, ask the question.  If you don't know the answer, just say 'Hmm, I'm not sure.' Don't try to make up an answer."
+        + "If the question is not about the Rockwell products, politely inform them that you are tuned to only answer questions about the Rockwell products."
+        + "For tabular information return it as an html table. Do not return markdown format. If the question is not in English, answer in the language used in the question."
+        + "Lastly, answer the question as if you were an expert technical support person for rockwell products."
     )
 
     # shots/sample conversation
@@ -118,7 +118,7 @@ info4.pdf: In-network institutions include Overlake, Swedish and others in the r
                 # Azure Open AI takes the deployment name as the model name
                 model=self.chatgpt_deployment if self.chatgpt_deployment else self.chatgpt_model,
                 messages=message_builder.messages,
-                temperature=overrides.get("temperature", 0.3),
+                temperature=overrides.get("temperature", 0.0),
                 max_tokens=1024,
                 n=1,
             )

@@ -18,10 +18,10 @@ import {
 } from "../../api";
 import { Answer, AnswerError, AnswerLoading } from "../../components/Answer";
 import { QuestionInput } from "../../components/QuestionInput";
-import { ExampleList } from "../../components/Example";
+// import { ExampleList } from "../../components/Example";
 import { UserChatMessage } from "../../components/UserChatMessage";
 import { AnalysisPanel, AnalysisPanelTabs } from "../../components/AnalysisPanel";
-import { SettingsButton } from "../../components/SettingsButton";
+// import { SettingsButton } from "../../components/SettingsButton";
 import { ClearChatButton } from "../../components/ClearChatButton";
 import { useLogin, getToken, isLoggedIn, requireAccessControl } from "../../authConfig";
 import { VectorSettings } from "../../components/VectorSettings";
@@ -32,7 +32,7 @@ import { GPT4VSettings } from "../../components/GPT4VSettings";
 const Chat = () => {
     const [isConfigPanelOpen, setIsConfigPanelOpen] = useState(false);
     const [promptTemplate, setPromptTemplate] = useState<string>("");
-    const [temperature, setTemperature] = useState<number>(0.3);
+    const [temperature, setTemperature] = useState<number>(0.0);
     const [retrieveCount, setRetrieveCount] = useState<number>(3);
     const [retrievalMode, setRetrievalMode] = useState<RetrievalMode>(RetrievalMode.Hybrid);
     const [useSemanticRanker, setUseSemanticRanker] = useState<boolean>(true);
@@ -273,16 +273,16 @@ const Chat = () => {
         <div className={styles.container}>
             <div className={styles.commandsContainer}>
                 <ClearChatButton className={styles.commandButton} onClick={clearChat} disabled={!lastQuestionRef.current || isLoading} />
-                <SettingsButton className={styles.commandButton} onClick={() => setIsConfigPanelOpen(!isConfigPanelOpen)} />
+                {/* <SettingsButton className={styles.commandButton} onClick={() => setIsConfigPanelOpen(!isConfigPanelOpen)} /> */}
             </div>
             <div className={styles.chatRoot}>
                 <div className={styles.chatContainer}>
                     {!lastQuestionRef.current ? (
                         <div className={styles.chatEmptyState}>
-                            <SparkleFilled fontSize={"120px"} primaryFill={"rgba(115, 118, 225, 1)"} aria-hidden="true" aria-label="Chat logo" />
-                            <h1 className={styles.chatEmptyStateTitle}>Chat with your data</h1>
-                            <h2 className={styles.chatEmptyStateSubtitle}>Ask anything or try an example</h2>
-                            <ExampleList onExampleClicked={onExampleClicked} useGPT4V={useGPT4V} />
+                            <SparkleFilled fontSize={"120px"} primaryFill={"rgba(197, 2, 50, 1)"} aria-hidden="true" aria-label="Chat logo" />
+                            <h1 className={styles.chatEmptyStateTitle}>Rockwell PlantPAxAI</h1>
+                            <h2 className={styles.chatEmptyStateSubtitle}>Ask anything about your devices</h2>
+                            {/* <ExampleList onExampleClicked={onExampleClicked} useGPT4V={useGPT4V} /> */}
                         </div>
                     ) : (
                         <div className={styles.chatMessageStream}>
@@ -345,12 +345,7 @@ const Chat = () => {
                     )}
 
                     <div className={styles.chatInput}>
-                        <QuestionInput
-                            clearOnSend
-                            placeholder="Type a new question (e.g. does my plan cover annual eye exams?)"
-                            disabled={isLoading}
-                            onSend={question => makeApiRequest(question)}
-                        />
+                        <QuestionInput clearOnSend placeholder="Type a new question" disabled={isLoading} onSend={question => makeApiRequest(question)} />
                     </div>
                 </div>
 

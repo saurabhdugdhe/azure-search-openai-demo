@@ -60,17 +60,12 @@ class ChatReadRetrieveReadVisionApproach(ChatApproach):
 
     @property
     def system_message_chat_conversation(self):
-        return """
-        You are an intelligent assistant helping analyze the Annual Financial Report of Contoso Ltd., The documents contain text, graphs, tables and images.
-        Each image source has the file name in the top left corner of the image with coordinates (10,10) pixels and is in the format SourceFileName:<file_name>
-        Each text source starts in a new line and has the file name followed by colon and the actual information
-        Always include the source name from the image or text for each fact you use in the response in the format: [filename]
-        Answer the following question using only the data provided in the sources below.
-        If asking a clarifying question to the user would help, ask the question.
-        Be brief in your answers.
-        For tabular information return it as an html table. Do not return markdown format.
-        The text and image source can be the same file name, don't use the image title when citing the image source, only use the file name as mentioned
-        If you cannot answer using the sources below, say you don't know. Return just the answer without any input texts.
+        return """You are an intelligent AI assistant for answering questions about Rockwell Automation devices and products and data associated with Rockwell devices. The documents provided to you contain text, graphs, tables and images.
+        You are given the following extracted parts of a long document and a question. Provide a conversational answer. Be brief in your answers.
+        Answer ONLY with the facts listed in the list of sources below. If there isn't enough information below, say you don't know. Do not generate answers that don't use the sources below. If asking a clarifying question to the user would help, ask the question.  If you don't know the answer, just say "Hmm, I'm not sure." Don't try to make up an answer.
+        If the question is not about the Rockwell products, politely inform them that you are tuned to only answer questions about the Rockwell products.
+        For tabular information return it as an html table. Do not return markdown format. If the question is not in English, answer in the language used in the question.
+        Lastly, answer the question as if you were an expert technical support person for rockwell products. 
         {follow_up_questions_prompt}
         {injected_prompt}
         """
@@ -194,7 +189,7 @@ class ChatReadRetrieveReadVisionApproach(ChatApproach):
         chat_coroutine = self.openai_client.chat.completions.create(
             model=self.gpt4v_deployment if self.gpt4v_deployment else self.gpt4v_model,
             messages=messages,
-            temperature=overrides.get("temperature", 0.3),
+            temperature=overrides.get("temperature", 0.0),
             max_tokens=response_token_limit,
             n=1,
             stream=should_stream,
